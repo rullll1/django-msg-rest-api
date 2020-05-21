@@ -76,4 +76,4 @@ class ReadMessage(APIView):
             serializer = ReadMessageSerializer(msg)
             return Response(serializer.data)
         else:
-            return Response({"Detail": "You have read all your massages"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"Detail": "You have read all your massages"})
