@@ -1,10 +1,7 @@
-from django.shortcuts import get_object_or_404
-from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
-from rest_framework import viewsets, status
-from rest_framework.views import  APIView
+from rest_framework import status
+from rest_framework.views import APIView
 from .serializers import CreateMessageSerializer, ReadMessageSerializer
 from .models import Message
-from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
@@ -52,7 +49,7 @@ class CreateDeleteMessage(APIView):
             return Response({"error": "Message does not exist"}, status.HTTP_404_NOT_FOUND)
         if request.user == msg.author or request.user == msg.receiver:
             msg.delete()
-            return Response({'Success: Message was deleted!'}, status=status.HTTP_204_NO_CONTENT)
+            return Response({'Success: Message was deleted!'})
         else:
             return Response({"Error": "Trying to delete not your message"},
                             status=status.HTTP_403_FORBIDDEN)
@@ -76,4 +73,4 @@ class ReadMessage(APIView):
             serializer = ReadMessageSerializer(msg)
             return Response(serializer.data)
         else:
-            return Response({"Detail": "You have read all your massages"}, status=status.HTTP_204_NO_CONTENT)
+            return Response({"Detail": "You have read all your massages"})
